@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday 18</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="hearts"></div>
+<main>
+    <!-- البداية -->
+    <section id="welcome" class="screen active">
+        <div class="glass welcome-box">
+            <div class="date">
+                18 • 10
+            </div>
+            <div class="star">18</div>
+            <h1>
+                HAPPY<br>
+                BIRTHDAY
+            </h1>
+            <h2>
+                يا وجه الخير
+            </h2>
+            <p>
+                اليوم مو يوم عادي...
+                <br>
+                عندنا لك مفاجأة صغيرة.
+            </p>
+            <div class="music-player" id="musicPlayer">
+                <audio id="birthdaySong" preload="metadata">
+                    <source src="assets/birthday-song.mp3" type="audio/mpeg">
+                </audio>
+                <div class="music-heading">
+                    <span class="music-disc">♫</span>
+                    <div>
+                        <strong>أغنية يومك</strong>
+                        <small>شغليها وخلي اللحظة تبدأ</small>
+                    </div>
+                </div>
+                <button class="play-button" id="playButton" type="button" aria-label="تشغيل الأغنية">▶</button>
+                <div class="progress-wrap">
+                    <div class="progress-track" id="progressTrack">
+                        <div class="progress-fill" id="progressFill"></div>
+                        <span class="panda-progress" id="pandaProgress">🐼</span>
+                    </div>
+                    <div class="time-row">
+                        <span id="currentTime">0:00</span>
+                        <span id="duration">0:00</span>
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="startExperience()">
+                ابدئي المفاجأة ✨
+            </button>
+        </div>
+    </section>
+    <!-- الاختبار -->
+    <section id="quiz" class="screen">
+        <div class="top">
+            <span>
+                تحدي الـ18
+            </span>
+            <span>
+                النقاط:
+                <b id="score">0</b>
+                / 18
+            </span>
+        </div>
+        <div class="glass quiz-box">
+            <div id="questionNumber"></div>
+            <h2 id="question"></h2>
+            <div id="answers"></div>
+            <div id="feedback"></div>
+        </div>
+    </section>
+    <!-- الفوز -->
+    <section id="success" class="screen">
+        <div class="glass success-box">
+            <div class="number18">
+                18
+            </div>
+            <h1>
+                18 نقطة تم تجميعها
+            </h1>
+            <p>
+                في يوم الـ18
+            </p>
+            <h2>
+                أكيد إنك أقوى ستريمر!
+            </h2>
+            <button onclick="openCake()">
+                الكعكة تنتظرك 🎂
+            </button>
+        </div>
+    </section>
+    <!-- الكعكة -->
+    <section id="cake" class="screen">
+        <div class="cake-page">
+            <h1>
+                لحظة عيد الميلاد
+            </h1>
+            <p>
+                خمس شمعات... وذكرى ما تنسى
+            </p>
+            <div class="cake">
+                <!-- الشموع -->
+                <div class="candles">
+                    <span class="candle c1"><i></i></span>
+                    <span class="candle c2"><i></i></span>
+                    <span class="candle c3"><i></i></span>
+                    <span class="candle c4"><i></i></span>
+                    <span class="candle c5"><i></i></span>
+                </div>
+                <!-- الجزء العلوي -->
+                <div class="cake-top">
+                    <div class="photo-circle">
+                        <img
+                            src="assets/birthday-photo.jpg"
+                            alt="Birthday"
+                            onerror="showPhotoPlaceholder()"
+                        >
+                        <div id="photoPlaceholder">
+                            صورتها هنا 💗
+                        </div>
+                    </div>
+                </div>
+                <!-- جسم الكعكة -->
+                <div class="cake-body">
+                    <div class="cream">
+                    </div>
+                    <div class="cake-hearts">
+                        • • •
+                    </div>
+                </div>
+                <div class="cake-bottom">
+                </div>
+            </div>
+            <button
+                id="blowButton"
+                onclick="blowCandles()"
+            >
+                انفخي الشموع
+            </button>
+            <div id="finalMessage">
+                <div class="final-heart">
+                    ♥
+                </div>
+                <h1>
+                    كل عام وانتي بخير يا وجه الخير
+                </h1>
+                <p>
+                    عسى أيامك كلها فرح وضحكة ودونيشنات
+                </p>
+                <button id="galleryTrigger" type="button" class="gallery-trigger">
+                    هدية غالية من شخص غالي
+                </button>
+                <div class="heart-line">
+                    ✦  ♡  ✦  ♡  ✦
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+<script src="app.js"></script>
+<script>
+    const galleryImages = [
+        "assets/gallery/IMG_0963.PNG",
+        "assets/gallery/IMG_1391.PNG",
+        "assets/gallery/IMG_1392.PNG",
+        "assets/gallery/IMG_1396.PNG",
+        "assets/gallery/IMG_1695.PNG",
+        "assets/gallery/IMG_2546.PNG",
+        "assets/gallery/IMG_3040.PNG",
+        "assets/gallery/photo_2026-10-04_17-35-28.jpg"
+    ];
+
+    function renderGallery() {
+        const galleryStage = document.getElementById("galleryStage");
+        if (!galleryStage) return;
+
+        galleryStage.innerHTML = "";
+        galleryImages.forEach((src, index) => {
+            const item = document.createElement("button");
+            item.type = "button";
+            item.className = "gallery-item";
+            item.style.animationDelay = `${index * 180}ms`;
+
+            const image = document.createElement("img");
+            image.src = src;
+            image.alt = `صورة ${index + 1}`;
+            image.addEventListener("click", (event) => {
+                event.stopPropagation();
+                openPreview(src);
+            });
+
+            item.appendChild(image);
+            galleryStage.appendChild(item);
+        });
+    }
+
+    function openGallery() {
+        createGalleryModal();
+        const modal = document.getElementById("galleryModal");
+        if (!modal) return;
+        renderGallery();
+        modal.classList.add("show");
+        modal.setAttribute("aria-hidden", "false");
+    }
+
+    function closeGallery() {
+        const modal = document.getElementById("galleryModal");
+        if (!modal) return;
+        modal.classList.remove("show");
+        modal.setAttribute("aria-hidden", "true");
+    }
+
+    function openPreview(src) {
+        const previewModal = document.getElementById("imagePreviewModal");
+        const previewImage = document.getElementById("previewImage");
+        if (!previewModal || !previewImage) return;
+
+        previewImage.src = src;
+        previewModal.classList.add("show");
+        previewModal.setAttribute("aria-hidden", "false");
+    }
+
+    function closePreview() {
+        const previewModal = document.getElementById("imagePreviewModal");
+        if (!previewModal) return;
+        previewModal.classList.remove("show");
+        previewModal.setAttribute("aria-hidden", "true");
+    }
+
+    function createGalleryModal() {
+        if (document.getElementById("galleryModal")) return;
+
+        const modal = document.createElement("div");
+        modal.id = "galleryModal";
+        modal.className = "gallery-modal";
+        modal.setAttribute("aria-hidden", "true");
+
+        modal.innerHTML = `
+            <div class="gallery-overlay" data-close="gallery"></div>
+            <div class="gallery-panel">
+                <button type="button" class="close-gallery" aria-label="إغلاق">✕</button>
+                <h2>كل عام وانتِ بخير يا اجمل ما حصل بأكتوبر![❤️]</h2>
+                <div class="gallery-note">كل عام وانتِ بخير يا اجمل ما حصل بأكتوبر![❤️]</div>
+                <div id="galleryStage" class="gallery-stage"></div>
+            </div>
+        `;
+
+        const preview = document.createElement("div");
+        preview.id = "imagePreviewModal";
+        preview.className = "image-preview-modal";
+        preview.setAttribute("aria-hidden", "true");
+        preview.innerHTML = `
+            <div class="preview-overlay" data-close="preview"></div>
+            <div class="preview-box">
+                <button type="button" class="close-preview" aria-label="إغلاق">✕</button>
+                <img id="previewImage" src="" alt="صورة مكبرة">
+            </div>
+        `;
+
+        document.body.appendChild(modal);
+        document.body.appendChild(preview);
+
+        document.querySelector(".close-gallery")?.addEventListener("click", closeGallery);
+        document.querySelector(".close-preview")?.addEventListener("click", closePreview);
+        document.querySelector(".gallery-overlay")?.addEventListener("click", closeGallery);
+        document.querySelector(".preview-overlay")?.addEventListener("click", closePreview);
+    }
+
+    document.getElementById("galleryTrigger")?.addEventListener("click", openGallery);
+</script>
+</body>
+</html>
